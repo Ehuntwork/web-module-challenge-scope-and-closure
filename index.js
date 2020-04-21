@@ -27,11 +27,13 @@ function processFirstItem(stringList, callback) {
  * Study the code for counter1 and counter2. Answer the questions below.
  * 
  * 1. What is the difference between counter1 and counter2?
+ * You can acess the varibles in two but not one.
  * 
  * 2. Which of the two uses a closure? How can you tell?
+ * 1 is a closed enviroment hiding it's varibles from the world.
  * 
  * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
- *
+ *One
 */
 
 // counter1 code
@@ -56,11 +58,12 @@ function counter2() {
 
 Write a function called `inning` that generates a random number of points that a team scored in an inning. This should be a whole number between 0 and 2. */
 
-function inning(/*Code Here*/){
+function inning(){
 
-    /*Code Here*/
+    return Math.round(Math.random()*2);
 
 }
+//console.log(inning())/////////////////////////////////////////
 
 /* Task 3: finalScore()
 
@@ -76,11 +79,15 @@ finalScore(inning, 9) might return:
 
 */ 
 
-function finalScore(/*code Here*/){
-
-  /*Code Here*/
-
+function finalScore(inningVar , round){
+  const final = {"Home": 0, "Away": 0};
+  for( let i = 0; i <= round; i++){
+    final.Home += inningVar();
+    final.Away += inningVar();
+  }
+  return final;
 }
+//console.log(finalScore(inning,9));
 
 /* Task 4: 
 
@@ -103,9 +110,41 @@ and returns the score at each pont in the game, like so:
 9th inning: awayTeam - homeTeam
 
 Final Score: awayTeam - homeTeam */
+function getInningScore(inningVar, round){
+  const final = {"Home": 0, "Away": 0};
+  const arr = []
+  for( let i = 0; i <= round; i++){
+    arr.push(final.Home += inningVar())
+    arr.push(final.Away += inningVar())
+  }
+  return arr;
+}
+console.log(getInningScore(inning,10))
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+function scoreboard(getInningScore , inning, round) {
+  let awayPoint = 0;
+  let homePoint = 0;
+  for(let i = 1; i <= round ; i++){
+    homePoint = getInningScore(inning, round)[i];
+    awayPoint = getInningScore(inning, round)[i+1];
+    if(i % 10 === 1){
+      console.log(`${i}st inning: ${awayPoint} awayTeam - homeTeam ${homePoint}`)
+    }
+    else if(i % 10 === 2){
+      console.log(`${i}nd inning: ${awayPoint} awayTeam - homeTeam ${homePoint}`)
+    }
+    else if(i % 10 === 3){
+      console.log(`${i}rd inning: ${awayPoint} awayTeam - homeTeam ${homePoint}`)
+    }
+    else if(i === round){
+      console.log(`Final Score: ${awayPoint} awayTeam - homeTeam ${homePoint}`)
+    }
+    else{
+      console.log(`${i}th inning: ${awayPoint} awayTeam - homeTeam ${homePoint}`)
+    }
+
+}
+  
 }
 
-
+scoreboard(getInningScore,inning,5);
