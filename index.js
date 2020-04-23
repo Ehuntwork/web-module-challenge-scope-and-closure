@@ -33,7 +33,8 @@ function processFirstItem(stringList, callback) {
  * 1 is a closed enviroment hiding it's varibles from the world.
  * 
  * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
- *One
+ *One is good if you want to keep code cleaner an less buggy so stuff doesnt get messed up. two is good 
+ if you need to ask a varible directly outside of the function.
 */
 
 // counter1 code
@@ -60,10 +61,10 @@ Write a function called `inning` that generates a random number of points that a
 
 function inning(){
 
-    return Math.round(Math.random()*2);
+    return Math.floor(Math.random()*3);
 
 }
-//console.log(inning())/////////////////////////////////////////
+console.log(inning())/////////////////////////////////////////
 
 /* Task 3: finalScore()
 
@@ -87,7 +88,7 @@ function finalScore(inningVar , round){
   }
   return final;
 }
-//console.log(finalScore(inning,9));
+console.log(finalScore(inning,9));
 
 /* Task 4: 
 
@@ -110,41 +111,41 @@ and returns the score at each pont in the game, like so:
 9th inning: awayTeam - homeTeam
 
 Final Score: awayTeam - homeTeam */
-function getInningScore(inningVar, round){
-  const final = {"Home": 0, "Away": 0};
-  const arr = []
-  for( let i = 0; i <= round; i++){
-    arr.push(final.Home += inningVar())
-    arr.push(final.Away += inningVar())
-  }
-  return arr;
-}
-console.log(getInningScore(inning,10))
+function getInningScore(inningVar){
+  let point = 0;
+  
+  return function points() {
+    point = point + inningVar()
 
-function scoreboard(getInningScore , inning, round) {
-  let awayPoint = 0;
-  let homePoint = 0;
+    return point
+  }
+}
+
+
+function scoreboard(getInningScore, inningVar, round) {
+  const homePoint = getInningScore(inningVar);
+  const awayPoint = getInningScore(inningVar);
+
   for(let i = 1; i <= round ; i++){
-    homePoint = getInningScore(inning, round)[i];
-    awayPoint = getInningScore(inning, round)[i+1];
     if(i % 10 === 1){
-      console.log(`${i}st inning: ${awayPoint} awayTeam - homeTeam ${homePoint}`)
+      console.log(`${i}st inning: ${awayPoint()} -  ${homePoint()}`)
     }
     else if(i % 10 === 2){
-      console.log(`${i}nd inning: ${awayPoint} awayTeam - homeTeam ${homePoint}`)
+      console.log(`${i}nd inning: ${awayPoint()} - ${homePoint()}`)
     }
     else if(i % 10 === 3){
-      console.log(`${i}rd inning: ${awayPoint} awayTeam - homeTeam ${homePoint}`)
+      console.log(`${i}rd inning: ${awayPoint()} - ${homePoint()}`)
     }
     else if(i === round){
-      console.log(`Final Score: ${awayPoint} awayTeam - homeTeam ${homePoint}`)
+      console.log(`Final Score: ${awayPoint()} - ${homePoint()}`)
     }
     else{
-      console.log(`${i}th inning: ${awayPoint} awayTeam - homeTeam ${homePoint}`)
+      console.log(`${i}th inning: ${awayPoint()} - ${homePoint()}`)
     }
 
 }
   
 }
 
-scoreboard(getInningScore,inning,5);
+scoreboard(getInningScore,inning,3);
+
